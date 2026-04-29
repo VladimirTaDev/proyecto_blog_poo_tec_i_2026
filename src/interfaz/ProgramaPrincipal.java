@@ -40,19 +40,31 @@ public class ProgramaPrincipal {
 		while (opcion != 0) {
 			System.out.println("\n===== SISTEMA DE BLOGS =====");
 			System.out.println("1. Ver blogs");
+			System.out.println("2. Crear blog");
+			System.out.println("3. Borrar blog");
 			System.out.println("0. Salir");
 
 			opcion = leerEntero("Opción: ");
 
-			switch (opcion) {
-			case 1:
-				mostrarBlogs();
-				break;
-			case 0:
-				System.out.println("Fin del programa.");
-				break;
-			default:
-				System.out.println("Opción inválida.");
+			try {
+				switch (opcion) {
+				case 1:
+					mostrarBlogs();
+					break;
+				case 2:
+					crearBlog();
+					break;
+				case 3:
+					borrarBlog();
+					break;
+				case 0:
+					System.out.println("Fin del programa.");
+					break;
+				default:
+					System.out.println("Opción inválida.");
+				}
+			} catch (Exception e) {
+				System.out.println("Error: " + e.getMessage());
 			}
 		}
 	}
@@ -62,6 +74,31 @@ public class ProgramaPrincipal {
 
 		System.out.println("\n--- Blogs registrados ---");
 		imprimirMapa(blogs);
+	}
+	
+	private static void crearBlog() {
+		System.out.println("\n--- Crear blog ---");
+
+		System.out.print("Nombre: ");
+		String nombre = entrada.nextLine();
+
+		System.out.print("Descripción: ");
+		String descripcion = entrada.nextLine();
+
+		control.crearBlog(nombre, descripcion);
+
+		System.out.println("Blog creado correctamente.");
+	}
+
+	private static void borrarBlog() throws Exception {
+		System.out.println("\n--- Borrar blog ---");
+		mostrarBlogs();
+
+		int codigoBlog = leerEntero("Código del blog a borrar: ");
+
+		control.borrarBlog(codigoBlog);
+
+		System.out.println("Blog borrado correctamente.");
 	}
 
 	private static void imprimirMapa(Map<Integer, String> datos) {
