@@ -59,7 +59,7 @@ public class Blog {
 	public String getRepresentacionPublicacion(int codigoPublicacion) throws Exception {
 		revisarPublicacionExistente(codigoPublicacion);
 		Publicacion p = publicaciones.get(codigoPublicacion);
-		return p.toString();
+		return p.mostrarPublicacion();
 	}
 
 	public Map<Integer, String> getTitulosPublicaciones() {
