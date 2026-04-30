@@ -32,6 +32,26 @@ public class ProgramaPrincipal {
 
 		control.crearBlog("Laboratorio de Sokolov",
 				"Tecnología rara, robots sospechosos y commits con olor a metal.");
+
+		control.crearPublicacion(1,
+				"Volgin y los commits eléctricos",
+				"El coronel Volgin recomienda no hacer push directo a main mientras hay tormenta.",
+				"Coronel Volgin");
+
+		control.crearPublicacion(1,
+				"Ocelot practica manejo de excepciones",
+				"Revolver Ocelot lanzó tres Exceptions al aire y atrapó dos con try/catch.",
+				"Revolver Ocelot");
+
+		control.crearPublicacion(2,
+				"Borsch para misiones largas",
+				"Receta aprobada para estudiantes que depuran hasta medianoche.",
+				"Cocinero de Mother Base");
+
+		control.crearPublicacion(3,
+				"Sokolov y el código que no debía existir",
+				"Sokolov insiste en que el prototipo funcionaba antes de agregarle más if.",
+				"Nikolai Sokolov");
 	}
 
 	private static void menuPrincipal() {
@@ -42,6 +62,7 @@ public class ProgramaPrincipal {
 			System.out.println("1. Ver blogs");
 			System.out.println("2. Crear blog");
 			System.out.println("3. Borrar blog");
+			System.out.println("4. Entrar a un blog");
 			System.out.println("0. Salir");
 
 			opcion = leerEntero("Opción: ");
@@ -56,6 +77,9 @@ public class ProgramaPrincipal {
 					break;
 				case 3:
 					borrarBlog();
+					break;
+				case 4:
+					entrarBlog();
 					break;
 				case 0:
 					System.out.println("Fin del programa.");
@@ -99,6 +123,72 @@ public class ProgramaPrincipal {
 		control.borrarBlog(codigoBlog);
 
 		System.out.println("Blog borrado correctamente.");
+	}
+	
+	private static void entrarBlog() throws Exception {
+		System.out.println("\n--- Entrar a un blog ---");
+		mostrarBlogs();
+
+		int codigoBlog = leerEntero("Código del blog: ");
+
+		control.obtenerPublicaciones(codigoBlog);
+
+		menuBlog(codigoBlog);
+	}
+
+	private static void menuBlog(int codigoBlog) {
+		int opcion = -1;
+
+		while (opcion != 0) {
+			System.out.println("\n===== MENÚ DEL BLOG " + codigoBlog + " =====");
+			System.out.println("1. Ver publicaciones");
+			System.out.println("2. Crear publicación");
+			System.out.println("0. Regresar");
+
+			opcion = leerEntero("Opción: ");
+
+			try {
+				switch (opcion) {
+				case 1:
+					mostrarPublicaciones(codigoBlog);
+					break;
+				case 2:
+					crearPublicacion(codigoBlog);
+					break;
+				case 0:
+					System.out.println("Regresando al menú principal.");
+					break;
+				default:
+					System.out.println("Opción inválida.");
+				}
+			} catch (Exception e) {
+				System.out.println("Error: " + e.getMessage());
+			}
+		}
+	}
+
+	private static void mostrarPublicaciones(int codigoBlog) throws Exception {
+		Map<Integer, String> publicaciones = control.obtenerPublicaciones(codigoBlog);
+
+		System.out.println("\n--- Publicaciones ---");
+		imprimirMapa(publicaciones);
+	}
+
+	private static void crearPublicacion(int codigoBlog) throws Exception {
+		System.out.println("\n--- Crear publicación ---");
+
+		System.out.print("Título: ");
+		String titulo = entrada.nextLine();
+
+		System.out.print("Texto: ");
+		String texto = entrada.nextLine();
+
+		System.out.print("Nombre del creador: ");
+		String nombreCreador = entrada.nextLine();
+
+		control.crearPublicacion(codigoBlog, titulo, texto, nombreCreador);
+
+		System.out.println("Publicación creada correctamente.");
 	}
 
 	private static void imprimirMapa(Map<Integer, String> datos) {
