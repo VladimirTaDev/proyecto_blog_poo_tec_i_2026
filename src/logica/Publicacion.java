@@ -2,6 +2,7 @@ package logica;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Publicacion {
 	private static int contadorPublicacion = 1;
@@ -10,7 +11,7 @@ public class Publicacion {
 	private String texto;
 	private String nombreCreador;
 	private LocalDateTime fechaPublicacion;
-	private ArrayList<Comentario> comentarios;
+	private List<Comentario> comentarios;
 
 	public Publicacion(String titulo, String texto, String nombreCreador) {
 		codigo = contadorPublicacion++;
@@ -39,10 +40,6 @@ public class Publicacion {
 
 	public void setTexto(String texto) {
 		this.texto = texto;
-	}
-
-	public ArrayList<Comentario> getComentarios() {
-		return comentarios;
 	}
 
 	public String getNombreCreador() {
